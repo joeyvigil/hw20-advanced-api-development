@@ -1,7 +1,7 @@
 from datetime import date, time
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy import Date, Float, ForeignKey, String, Table, Column
+from sqlalchemy import Date, Float, ForeignKey, String, Table, Column, Integer
 from datetime import datetime
 
 class Base(DeclarativeBase):
@@ -61,3 +61,26 @@ class ServiceMechanics(Base):
 
     mechanic: Mapped['Mechanics'] = relationship('Mechanics', back_populates='service_mechanics')
     service: Mapped['ServiceTickets'] = relationship('ServiceTickets', back_populates='service_mechanics')
+    
+    
+#-----
+class TicketInventorys(Base):
+    __tablename__ = 'service_mechanics'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ticket_id: Mapped[int] = mapped_column(ForeignKey('service_tickets.id', ondelete='CASCADE'))
+    inventory_id: Mapped[int] = mapped_column(ForeignKey('inventory.id', ondelete='CASCADE'))
+# TODO
+    # mechanic: Mapped['Mechanics'] = relationship('Mechanics', back_populates='service_mechanics')
+    # service: Mapped['ServiceTickets'] = relationship('ServiceTickets', back_populates='service_mechanics')
+    
+    
+class Inventory(Base):
+    __tablename__ = 'inventory'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    price: Mapped[float] = mapped_column(Float)
+    quantity: Mapped[int] = mapped_column(Integer)
+# TODO
+    # service_mechanics: Mapped[list['ServiceMechanics']] = relationship('ServiceMechanics', back_populates='mechanic')
