@@ -61,4 +61,14 @@ def update_customer(customer_id):
 
     db.session.commit()
     return customer_schema.jsonify(customer), 200
+
+#-   Search for a Customer using there email as a Query Parameter.
+@customers_bp.route('/search', methods=['GET'])
+@limiter.limit("300 per hour")
+def search_customer():
+    email = request.args.get('email')
+    print("this",email)
+    customer = db.session.query(Customers).where(Customers.email.ilike(f"%{email}%")).first()
+    return customer_schema.jsonify(customer), 200
+
     

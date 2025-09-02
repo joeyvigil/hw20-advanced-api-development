@@ -172,6 +172,57 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "search customers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTY4MjY0OTksImlhdCI6MTc1NjgyMjg5OSwic3ViIjoiMiJ9.XNhCt0Uq-TVgCSBFS6v24AuxG824TCHjczzG3Gw14pU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/customers/search?email=jg@v.co",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"customers",
+						"search"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "jg@v.co"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -24,10 +24,24 @@
 -   Additionally add @token_required to any routes you think should require authorization. (ex: Update, Delete,...)
 
 ## Advanced Queries: (JUST ONE)
--   Add an update route to your service_ticket blueprint to add and remove mechanics from a ticket.
--   ---- Use id's to look up the mechanic to append or remove them from the ticket.mechanics list
 -   Create an endpoint in mechanics blueprint that returns a list of mechanics in order of who has worked on the most tickets
 -   Apply Pagination to GET Customers route.
+-   Search for a Customer using there email as a Query Parameter.
+
+### Search for a Customer using there email as a Query Parameter
+```json
+method: GET
+url: http://127.0.0.1:5000/customers/search?email=jg@v.co
+response:
+{
+    "address": "1234 ",
+    "email": "jg@v.co",
+    "first_name": "joe",
+    "id": 1,
+    "last_name": "vig",
+    "phone": "123-4567"
+}
+```
 
 ## Inventory Model
 **Assignment Continuation:** Incorporating a new resource to the API, we are now going to track inventory.
