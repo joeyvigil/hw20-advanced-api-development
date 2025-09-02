@@ -1,5 +1,5 @@
 from app.blueprints.inventory import inventory_bp
-from .schemas import inventory_schema, inventory_schema
+from .schemas import inventory_schema, inventorys_schema
 from flask import request, jsonify
 from marshmallow import ValidationError
 from app.models import Inventory, db
@@ -24,7 +24,7 @@ def create_inventory():
 @inventory_bp.route('', methods=['GET']) 
 def read_inventory():
     inventory = db.session.query(Inventory).all()
-    return inventory_schema.jsonify(inventory), 200
+    return inventorys_schema.jsonify(inventory), 200
 
 
 # GET at ID
@@ -37,10 +37,13 @@ def get_at_id_inventory(inventory_id):
 # Delete at ID
 @inventory_bp.route('<int:inventory_id>', methods=['DELETE'])
 def delete_inventory(inventory_id):
-    inventory = db.session.get(Inventory, inventory_id)
-    db.session.delete(inventory)
-    db.session.commit()
-    return jsonify({"message": f"Successfully deleted inventory {inventory_id}"}), 200
+    try:
+        inventory = db.session.get(Inventory, inventory_id)
+        db.session.delete(inventory)
+        db.session.commit()
+        return jsonify({"message": f"Successfully deleted inventory {inventory_id}"}), 200
+    except:
+        return jsonify({"message": f"Delete of inventory id:{inventory_id} unsuccessful"}), 400
 
 
 # PUT at id

@@ -1,6 +1,7 @@
 # hw20-advanced-api-development
 *following along with the practice assignments your Mechanic API*
 
+![image](Mechanic_shop_pic.png)
 
 ## Rate Limiting and Caching
 -   Using the Flask-Limiter package, have a rate limit applied to at least one route in your API
@@ -52,7 +53,100 @@ Create a new folder in blueprints for Inventory:
 ## Inventory Routes
 For inventory implement basic CRUD routes to Create, Read, Update, and Delete parts stored in our inventory.
 
-Additionally Create a route in the service_ticket blueprint to add a single part to an existing Service Ticket.
+### Create
+```json
+method: POST
+url: http://127.0.0.1:5000/inventory
+body (raw, JSON):
+{    
+    "name": "speaker",
+    "price": "20",
+    "quantity": "10"
+}
+response:
+{
+    "id": 1,
+    "name": "speaker",
+    "price": 20,
+    "quantity": 10
+}
+```
+
+### Read
+```json
+method: GET
+url: http://127.0.0.1:5000/inventory
+response:
+[
+    {
+        "id": 1,
+        "name": "speaker",
+        "price": 20,
+        "quantity": 10
+    },
+    {
+        "id": 2,
+        "name": "front bumper",
+        "price": 120.25,
+        "quantity": 2
+    }
+]
+```
+
+```json
+method: GET
+url: http://127.0.0.1:5000/inventory/1
+response:
+{
+    "id": 1,
+    "name": "speaker",
+    "price": 20,
+    "quantity": 10
+}
+```
+
+### Update
+```json
+method: PUT
+url: http://127.0.0.1:5000/inventory/1
+body (raw, JSON):
+{
+    "name": "pioneer speakers 6.5 inch",
+    "price": 25.00,
+    "quantity": 42
+}
+response:
+{
+    "id": 1,
+    "name": "pioneer speakers 6.5 inch",
+    "price": 25,
+    "quantity": 42
+}
+```
+
+### Delete
+```json
+method: DELETE
+url:http://127.0.0.1:5000/inventory/1
+response:
+{
+    "message": "Successfully deleted inventory 1"
+}
+```
+
+
+### Additionally Create a route in the service_ticket blueprint to add a single part to an existing Service Ticket
+```json
+method: POST
+url: http://127.0.0.1:5000/ticket_inventory/1/assign-inventory/1
+Authorization (Bearer Token): eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTY4MjY0OTksImlhdCI6MTc1NjgyMjg5OSwic3ViIjoiMiJ9.XNhCt0Uq-TVgCSBFS6v24AuxG824TCHjczzG3Gw14pU
+response:
+{
+    "id": 1,
+    "inventory_id": 1,
+    "ticket_id": 1
+}
+```
 
 ## Testing and Submission
 Test all routes in Postman to ensure each endpoint works as designed. In Postman add every test request to a collection, and export that collection to your API project folder. Push your work to Github and submit the link to the GitHub repo.
