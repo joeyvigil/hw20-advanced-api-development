@@ -1,11 +1,11 @@
 from app.extensions import ma
-from app.models import Mechanics
+from app.models import Inventory, db
 
 
-class MechanicSchema(ma.SQLAlchemyAutoSchema):
+class InventorySchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Mechanics
+        model = Inventory 
+        include_fk=True
 
-mechanic_schema = MechanicSchema() 
-mechanics_schema = MechanicSchema(many=True) 
-login_schema = MechanicSchema(exclude=['address','first_name','last_name','salary'])
+inventory_schema = InventorySchema() 
+inventorys_schema = InventorySchema(many=True) 

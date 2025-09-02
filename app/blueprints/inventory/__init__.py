@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-mechanics_bp = Blueprint('mechanics_bp', __name__)
+inventory_bp = Blueprint('inventory_bp', __name__)
 
 from . import routes
