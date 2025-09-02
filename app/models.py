@@ -65,7 +65,7 @@ class ServiceMechanics(Base):
     
 #-----
 class TicketInventorys(Base):
-    __tablename__ = 'service_mechanics'
+    __tablename__ = 'ticket_inventory'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     ticket_id: Mapped[int] = mapped_column(ForeignKey('service_tickets.id', ondelete='CASCADE'))
