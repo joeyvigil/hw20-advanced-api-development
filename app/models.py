@@ -49,7 +49,8 @@ class ServiceTickets(Base):
     service_date: Mapped[date] = mapped_column(Date,default=datetime.now())
     
     customer: Mapped['Customers'] = relationship('Customers', back_populates='service_tickets')
-    service_mechanics: Mapped[list['ServiceMechanics']] = relationship('ServiceMechanics', back_populates='service')
+    service_mechanics: Mapped[list['ServiceMechanics']] = relationship('ServiceMechanics', back_populates='ticket')
+    ticket_inventory: Mapped[list['TicketInventory']] = relationship('TicketInventory', back_populates='ticket')
 
 
 class ServiceMechanics(Base):
@@ -60,19 +61,18 @@ class ServiceMechanics(Base):
     mechanic_id: Mapped[int] = mapped_column(ForeignKey('mechanics.id', ondelete='CASCADE'))
 
     mechanic: Mapped['Mechanics'] = relationship('Mechanics', back_populates='service_mechanics')
-    service: Mapped['ServiceTickets'] = relationship('ServiceTickets', back_populates='service_mechanics')
-    
+    ticket: Mapped['ServiceTickets'] = relationship('ServiceTickets', back_populates='service_mechanics')
     
 #-----
-class TicketInventorys(Base):
+class TicketInventory(Base):
     __tablename__ = 'ticket_inventory'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    ticket_id: Mapped[int] = mapped_column(ForeignKey('service_tickets.id', ondelete='CASCADE'))
     inventory_id: Mapped[int] = mapped_column(ForeignKey('inventory.id', ondelete='CASCADE'))
-# TODO
-    # mechanic: Mapped['Mechanics'] = relationship('Mechanics', back_populates='service_mechanics')
-    # service: Mapped['ServiceTickets'] = relationship('ServiceTickets', back_populates='service_mechanics')
+    ticket_id: Mapped[int] = mapped_column(ForeignKey('service_tickets.id', ondelete='CASCADE'))
+
+    inventory: Mapped['Inventory'] = relationship('Inventory', back_populates='ticket_inventory')
+    ticket: Mapped['ServiceTickets'] = relationship('ServiceTickets', back_populates='ticket_inventory')
     
     
 class Inventory(Base):
@@ -82,5 +82,5 @@ class Inventory(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     price: Mapped[float] = mapped_column(Float)
     quantity: Mapped[int] = mapped_column(Integer)
-# TODO
-    # service_mechanics: Mapped[list['ServiceMechanics']] = relationship('ServiceMechanics', back_populates='mechanic')
+
+    ticket_inventory: Mapped[list['TicketInventory']] = relationship('TicketInventory', back_populates='inventory')
